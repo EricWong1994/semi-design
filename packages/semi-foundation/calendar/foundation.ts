@@ -191,9 +191,11 @@ export default class CalendarFoundation<P = Record<string, any>, S = Record<stri
     getWeeklyData(value: Date, dateFnsLocale: Locale) {
         const data = {} as WeeklyData;
         const { weekStartsOn } = this.getProps();
+        console.log('weekStartsOn: ', weekStartsOn);
         data.month = format(value, 'LLL', { locale: dateFnsLocale, weekStartsOn });
         data.week = calcWeekData(value, 'week', dateFnsLocale, weekStartsOn);
         this._adapter.setWeeklyData(data);
+        console.log('data: ', data);
         return data;
     }
 
@@ -286,6 +288,7 @@ export default class CalendarFoundation<P = Record<string, any>, S = Record<stri
     // return parsed weekly allday events
     parseWeeklyAllDayEvents(events: ParsedEvents['allDay']) {
         const { week } = this._adapter.getWeeklyData();
+        console.log('week: ', week);
         const weekStart = week[0].date;
         const parsed = this._parseWeeklyEvents(events, weekStart);
         const res = this._renderWeeklyAllDayEvent(parsed);
